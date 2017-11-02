@@ -1,1 +1,0 @@
-# thingplug-gw-osgi-test
