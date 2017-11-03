@@ -40,13 +40,18 @@ object Dependencies {
   val osgiCore = "org.osgi" % "org.osgi.core" % "4.3.0" % "provided"
   val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "4.3.0"
   val alpakka = "com.lightbend.akka" %% "akka-stream-alpakka-mqtt" % "0.10"
-  val onem2m = "com.uangel" % "com.uangel.onem2m" % "1.0" from "file:////Users/kylee/git/thingplug-gw-osgi/lib/onem2m.jar"
+
+  //hscho
+  val hadoop = "org.apache.hadoop" % "hadoop-client" % "2.8.1"
 
   val gwcommon = Seq(akka_actor, akka_osgi, akka_remote)
   val gwmain = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium, alpakka)
   val export_thingplug = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium, spray)
-  val import_lora = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium, alpakka, onem2m)
+  val import_lora = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium, alpakka)
   val flow_preprocessing_vib = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium)
+
+  //hscho
+  val export_datalake = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium, spray, hadoop)
 
 
   val guice: Seq[ModuleID] = Seq(
