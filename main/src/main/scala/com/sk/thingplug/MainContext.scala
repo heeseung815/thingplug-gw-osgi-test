@@ -58,6 +58,7 @@ object MainContext {
   val loraSimulationModuleName = "lorasimulation"
   val thingplugActorName = "thingplug"
   val exportServiceModuleName = "thingplug"
+  val datalakeActorName = "datalake"
 
   // actor name
   val rootActorName = "gateway"

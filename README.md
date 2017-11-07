@@ -40,14 +40,15 @@ install mvn:org.agrona/agrona/0.9.5
 install mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.0
 install mvn:org.osgi/org.osgi.compendium/4.3.1
 install mvn:org.osgi/org.osgi.core/4.3.1
-install file:///Users/kylee/git/thingplug-gw-osgi/lib/akka-stream-alpakka-mqtt_2.12-0.10.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/lib/onem2m.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/common/target/scala-2.12/gwcommon_2.12-2.0.0-SNAPSHOT.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/module/import_lora/target/scala-2.12/import_lora_2.12-2.0.0-SNAPSHOT.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/module/flow_preprocessing_current/target/scala-2.12/flow_preprocessing_current_2.12-2.0.0-SNAPSHOT.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/module/flow_preprocessing_vib/target/scala-2.12/flow_preprocessing_vib_2.12-2.0.0-SNAPSHOT.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/module/export_thingplug/target/scala-2.12/export_thingplug_2.12-2.0.0-SNAPSHOT.jar
-install file:///Users/kylee/git/thingplug-gw-osgi/main/target/scala-2.12/gateway_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/lib/akka-stream-alpakka-mqtt_2.12-0.10.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/lib/onem2m.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/common/target/scala-2.12/gwcommon_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/import_lora/target/scala-2.12/import_lora_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/flow_preprocessing_current/target/scala-2.12/flow_preprocessing_current_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/flow_preprocessing_vib/target/scala-2.12/flow_preprocessing_vib_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/export_thingplug/target/scala-2.12/export_thingplug_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/export_datalake/target/scala-2.12/export_datalake_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/main/target/scala-2.12/gateway_2.12-2.0.0-SNAPSHOT.jar
 
 
 #install --r3-bundles mvn:com.typesafe.play/play-functional_2.12/2.6.0
