@@ -11,7 +11,7 @@ class DataLakeService(bname: String)(implicit val actorSystem: ActorSystem, val 
   override def bundleName: String = bname
   override def className: String = classOf[DataLakeService].getName
 
-  val sinkActorRef = actorSystem.actorOf(Props(classOf[DataLakeActor]))
+  val sinkActorRef = actorSystem.actorOf(Props(new DataLakeActor()))
 
   override def sink(setting: Config): Sink[GraphData, Any] = flow.to(Sink.actorRefWithAck(sinkActorRef, DataLakeActor.Init, DataLakeActor.Ack, DataLakeActor.Complete)).named("DataLakeGraph.sink")
 

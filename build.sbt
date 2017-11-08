@@ -47,7 +47,7 @@ lazy val export_datalake = (project in file("module/export_datalake"))
     osgiSettings,
     OsgiKeys.exportPackage := Seq("com.sk.thingplug.gw.export.datalake.activation", "com.sk.thingplug.gw.export.datalake"),
     OsgiKeys.privatePackage := Seq("com.sk.thingplug.gw", "com.sk.thingplug", "com.sk.thingplug.gw.export.datalake", "com.sk.thingplug.gw.export.datalake.hdfs"),
-    OsgiKeys.importPackage := Seq("com.sk.thingplug.api", "org.apache.hadoop", "spray.json", "org.slf4j", "com.typesafe.scalalogging", "org.osgi.framework.*", "com.typesafe.config", "org.osgi.service.cm", "org.osgi.util.tracker", "!sun.misc", "akka.*;version=\"[2.4,2.5.4]\"",  "scala.*"),
+    OsgiKeys.importPackage := Seq("com.sk.thingplug.api", "org.apache.hadoop", "org.apache.hadoop.conf", "spray.json", "org.slf4j", "com.typesafe.scalalogging", "org.osgi.framework.*", "com.typesafe.config", "org.osgi.service.cm", "org.osgi.util.tracker", "!sun.misc", "akka.*;version=\"[2.4,2.5.4]\"",  "scala.*"),
     OsgiKeys.bundleActivator := Option("com.sk.thingplug.gw.export.datalake.activation.DataLakeActivator")
   ).dependsOn(gwcommon, gateway)
 lazy val main_test = (project in file("module/main_test"))
