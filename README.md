@@ -33,7 +33,7 @@ install mvn:com.typesafe.akka/akka-stream_2.12/2.5.4
 install mvn:com.typesafe.scala-logging/scala-logging_2.12/3.5.0
 install mvn:io.aeron/aeron-client/1.2.5
 install mvn:io.aeron/aeron-driver/1.2.5
-install mvn:io.netty/netty/3.10.6.Final
+#install mvn:io.netty/netty/3.10.6.Final
 install mvn:io.spray/spray-json_2.12/1.3.3
 install mvn:joda-time/joda-time/2.9.9
 install mvn:org.agrona/agrona/0.9.5
@@ -49,6 +49,7 @@ install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/
 install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/export_thingplug/target/scala-2.12/export_thingplug_2.12-2.0.0-SNAPSHOT.jar
 install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/export_datalake/target/scala-2.12/export_datalake_2.12-2.0.0-SNAPSHOT.jar
 install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/main/target/scala-2.12/gateway_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/main_test/target/scala-2.12/main_test_2.12-2.0.0-SNAPSHOT.jar
 
 
 #install --r3-bundles mvn:com.typesafe.play/play-functional_2.12/2.6.0
@@ -60,4 +61,3 @@ install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/main/ta
 
 start 모든 bundle
 start 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87
-

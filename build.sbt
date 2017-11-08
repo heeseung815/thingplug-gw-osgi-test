@@ -50,6 +50,17 @@ lazy val export_datalake = (project in file("module/export_datalake"))
     OsgiKeys.importPackage := Seq("com.sk.thingplug.api", "org.apache.hadoop", "spray.json", "org.slf4j", "com.typesafe.scalalogging", "org.osgi.framework.*", "com.typesafe.config", "org.osgi.service.cm", "org.osgi.util.tracker", "!sun.misc", "akka.*;version=\"[2.4,2.5.4]\"",  "scala.*"),
     OsgiKeys.bundleActivator := Option("com.sk.thingplug.gw.export.datalake.activation.DataLakeActivator")
   ).dependsOn(gwcommon, gateway)
+lazy val main_test = (project in file("module/main_test"))
+  .enablePlugins(SbtOsgi)
+  .settings(
+    name := "main_test",
+    libraryDependencies ++= Dependencies.gwmain,
+    osgiSettings,
+    OsgiKeys.exportPackage := Seq("hscho.test.activation", "hscho.test", "hscho.test.service"),
+    OsgiKeys.privatePackage := Seq("hscho.test"),
+    OsgiKeys.importPackage := Seq("com.sk.thingplug.api", "org.slf4j", "com.typesafe.scalalogging", "org.osgi.framework.*", "com.typesafe.config", "org.osgi.service.cm", "org.osgi.util.tracker", "!sun.misc", "akka.*;version=\"[2.4,2.5.4]\"", "scala.*"),
+    OsgiKeys.bundleActivator := Option("hscho.test.activation.TestActivator")
+  ).dependsOn(gwcommon)
 
 lazy val import_lora = (project in file("module/import_lora"))
   .enablePlugins(SbtOsgi)
