@@ -12,6 +12,10 @@ org.osgi.framework.system.packages.extra=org.apache.karaf.branding,sun.reflect,s
 cd $KARAF_HOME
 bin/karaf
 
+feature:repo-add camel
+feature:install camel-hdfs2
+feature:install camel-servlet
+
 install mvn:org.scala-lang/scala-library/2.12.2
 install mvn:org.scala-lang/scala-reflect/2.12.2
 install mvn:org.scala-lang.modules/scala-java8-compat_2.12
@@ -50,6 +54,7 @@ install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/
 install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/export_datalake/target/scala-2.12/export_datalake_2.12-2.0.0-SNAPSHOT.jar
 install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/main/target/scala-2.12/gateway_2.12-2.0.0-SNAPSHOT.jar
 install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/main_test/target/scala-2.12/main_test_2.12-2.0.0-SNAPSHOT.jar
+install file:///Users/hscho/uangel/projects/test/thingplug2-gw-osgi-test/module/import_test/target/scala-2.12/import_test_2.12-2.0.0-SNAPSHOT.jar
 
 // for macbook
 install file:///Users/hscho/std/thingplug-gw-osgi-test/lib/akka-stream-alpakka-mqtt_2.12-0.10.jar

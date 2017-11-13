@@ -8,17 +8,17 @@ import hscho.test.service.{ExportServiceCustomizer, RunnableGraphBuilder}
 import org.osgi.framework.BundleContext
 import org.osgi.util.tracker.ServiceTracker
 
-class TestActivator extends ActorSystemActivator {
+class MainTestActivator extends ActorSystemActivator {
   var exportServiceTracker: ServiceTracker[ExportService[Any, Any, Any, Any], Any] = _
   var graphBuilder: RunnableGraphBuilder = _
 
   override def stop(context: BundleContext): Unit = {
-    println("TestActivator stop.")
+    println("MainTestActivator stop.")
     exportServiceTracker.close()
   }
 
   override def configure(context: BundleContext, system: ActorSystem): Unit = {
-    println("TestActivator start.")
+    println("MainTestActivator start.")
     implicit val materializer:ActorMaterializer = ActorMaterializer.create(system)
     implicit val s:ActorSystem = system
 
@@ -29,7 +29,7 @@ class TestActivator extends ActorSystemActivator {
           RunnableGraphConfig(
             "",
             Seq(""),
-            "com.sk.thingplug.gw.export.thingplug.activation.ThingPlugService"
+            "com.sk.thingplug.gw.export.datalake.activation.DataLakeService"
           )
         )
       ))

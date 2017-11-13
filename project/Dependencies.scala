@@ -52,6 +52,7 @@ object Dependencies {
 
   //hscho
   val export_datalake = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium, spray, hadoop)
+  val import_test = Seq(akka_actor, akka_osgi, akka_remote, config, scalalogging, osgiCore, osgiCompendium)
 
 
   val guice: Seq[ModuleID] = Seq(

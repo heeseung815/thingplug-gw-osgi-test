@@ -6,6 +6,8 @@ import com.sk.thingplug.gw.export.datalake.DataLakeConnection
 import com.typesafe.config.Config
 import com.typesafe.scalalogging.StrictLogging
 import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.{FileSystem, LocalFileSystem}
+import org.apache.hadoop.hdfs.DistributedFileSystem
 
 import scala.language.postfixOps
 
@@ -13,9 +15,9 @@ object DataLakeHdfsHandler {
   def apply(scheduler: Scheduler, dataLakeActor: ActorRef): DataLakeHdfsHandler = new DataLakeHdfsHandler(scheduler, dataLakeActor)
 
   val config: Config = GatewayConfig.config
-  val host: String = if (config.hasPath("thingplug.export.datalake.hdfs.hostname")) config.getString("thingplug.export.datalake.hdfs.hostname") else "192.168.1.74"
-  val port: String = if (config.hasPath("thingplug.export.datalake.hdfs.port")) config.getString("thingplug.export.datalake.hdfs.port") else "8020"
-  val user: String = if (config.hasPath("thingplug.export.datalake.hdfs.username")) config.getString("thingplug.export.datalake.hdfs.username") else "hdfs"
+  val host: String = if (config.hasPath("thingplug.export.datalake.hdfs.hostname")) config.getString("thingplug.export.datalake.hdfs.hostname") else "localhost"
+  val port: String = if (config.hasPath("thingplug.export.datalake.hdfs.port")) config.getString("thingplug.export.datalake.hdfs.port") else "9000"
+  val user: String = if (config.hasPath("thingplug.export.datalake.hdfs.username")) config.getString("thingplug.export.datalake.hdfs.username") else "hscho"
   val defaultPathPrefix: String = if (config.hasPath("thingplug.export.datalake.hdfs.default-path-prefix")) config.getString("thingplug.export.datalake.hdfs.default-path-prefix") else "fs.defaultFS"
   val hdfsUri: String = "hdfs://" + host + ":" + port
   val hdfsConfig: Configuration = new Configuration()
@@ -26,6 +28,8 @@ object DataLakeHdfsHandler {
   hdfsConfig.set("dfs.client.block.write.replace-datanode-on-failure.policy", "ALWAYS")
   hdfsConfig.setBoolean("dfs.client.block.write.replace-datanode-on-failure.enable", true)
   hdfsConfig.setBoolean("dfs.client.block.write.replace-datanode-on-failure.best-effort", true)
+//  hdfsConfig.setClass("fs.file.impl", classOf[LocalFileSystem], classOf[FileSystem])
+  hdfsConfig.setClass("fs.hdfs.impl", classOf[DistributedFileSystem], classOf[FileSystem])
   System.setProperty("HADOOP_USER_NAME", user)
 }
 

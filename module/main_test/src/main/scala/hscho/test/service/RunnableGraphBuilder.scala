@@ -1,5 +1,6 @@
 package hscho.test.service
 
+import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.alpakka.mqtt.{MqttConnectionSettings, MqttQoS, MqttSourceSettings}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
@@ -125,6 +126,11 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
       }
       case "skt.thingplug.export_datalake" => {
         println("DataLake service is reloaded..!")
+        println("+++++++++++++++++++++++++++++++")
+        println(s"service.className: ${service.className}")
+        println(s"service.className: ${service.bundleName}")
+        println("+++++++++++++++++++++++++++++++")
+        sinkMap += (service.className -> Seq(GraphSinkContext(service.bundleName, service.className, None, service.mergeHubSink(config))))
       }
       case u:Any => {
         logger.info(s"unknown bundle name. ${u.toString}")
@@ -132,10 +138,14 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
       }
     }
 
-
+    println(s"#1: ${graphConfig.graph.size}")
     //logger.info("reloadBidExportService 2")
-    val runnableGraphConfigs = graphConfig.graph.filter(
+    val runnableGraphConfigs: Seq[RunnableGraphConfig] = graphConfig.graph.filter(
       (runnableGraphConfig: RunnableGraphConfig) => {
+        println("=============")
+        println(s"sink: ${runnableGraphConfig.sink}")
+        println(s"className: ${service.className}")
+        println("=============")
         if (runnableGraphConfig.sink == service.className) {
           logger.info(s"runnableGraphConfig.sink=${runnableGraphConfig.sink}, service.className=${service.className}")
           true
@@ -144,6 +154,7 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
       }
     )
 
+    println(s"#2: ${runnableGraphConfigs.size}")
     //logger.info(s"reloadBidExportService 3. runnableGraphConfigs=${runnableGraphConfigs.toString()}")
     runnableGraphConfigs.foreach(
       (runnableGraphConfig: RunnableGraphConfig) => reload(runnableGraphConfig)
@@ -274,6 +285,8 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
   }
 */
   def reload(runnableGraphConfig: RunnableGraphConfig) :Unit = {
+    println(s"#3: ${sourceMap.size}")
+/*
     val sourceContextSeq: Option[Seq[GraphSourceContext]] = sourceMap.get(runnableGraphConfig.source)
     logger.info(s"build: config=${runnableGraphConfig}, context=${sourceContextSeq.toString}")
     sourceContextSeq match {
@@ -303,6 +316,7 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
         flowSeq ++= Seq(flowContext.get.flow)
       })
     }
+*/
 
     val sinkContextSeq: Option[Seq[GraphSinkContext]] = sinkMap.get(runnableGraphConfig.sink)
     logger.info(s"build: config=${runnableGraphConfig}, context=${sinkContextSeq.toString}")
@@ -322,6 +336,39 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
     })
     runnableGraphConfig.killSwitch = Seq.empty
 
+    val snr001_data01: Map[String, Any] = Map[String, Any](
+      "nodeId" -> "sensor001",
+      "frequency" -> 111,
+      "x" -> Array(1, 1, 1, 1, 1),
+      "y" -> Array(2, 2, 2, 2, 2),
+      "z" -> Array(3, 3, 3, 3, 3),
+      "timestamp" -> System.currentTimeMillis())
+    val snr001_data02: Map[String, Any] = Map[String, Any](
+      "nodeId" -> "sensor001",
+      "frequency" -> 111111,
+      "x" -> Array(10, 10, 10, 10, 10),
+      "y" -> Array(20, 20, 20, 20, 20),
+      "z" -> Array(30, 30, 30, 30, 30),
+      "timestamp" -> System.currentTimeMillis())
+    val snr002_data01: Map[String, Any] = Map[String, Any](
+      "nodeId" -> "sensor002",
+      "frequency" -> 222,
+      "x" -> Array(10000, 10000, 10000, 10000, 10000),
+      "y" -> Array(20000, 20000, 20000, 20000, 20000),
+      "z" -> Array(30000, 30000, 30000, 30000, 30000),
+      "timestamp" -> System.currentTimeMillis())
+
+
+    val graphDataList = List(new GraphData("sensor001", null, null, Seq(snr001_data01)), new GraphData("sensor002", null, null, Seq(snr002_data01)), new GraphData("sensor001", null, null, Seq(snr001_data02)))
+//    val temp = Source(1 to 10).viaMat(KillSwitches.single)(Keep.right).async
+    val testSource: Source[GraphData, UniqueKillSwitch] = Source(graphDataList).viaMat(KillSwitches.single)(Keep.right).async
+
+    println("# TRY!!")
+    sinkSeq.foreach( (sink:Sink[Any, Any]) =>  {
+      runnableGraphConfig.killSwitch ++= Seq(testSource.to(sink).run()(materializer))
+      logger.info(s"Succeed to run graph(${runnableGraphConfig.toString}).\n sink=$sinkContextSeq, killSwitch=${runnableGraphConfig.killSwitch.toString()}")
+    })
+/*
     sourceSeq.foreach( (source: Source[Any, Any]) => {
       var graph = source.viaMat(KillSwitches.single)(Keep.right).async
       flowSeq.foreach( (flow:Flow[Any, Any, Any]) => {
@@ -332,6 +379,7 @@ class RunnableGraphBuilder(context:BundleContext, graphConfig:GraphConfig)(impli
         logger.info(s"Succeed to run graph(${runnableGraphConfig.toString}).\n source=$sourceContextSeq, flowSeq=$flowContextSeq, sink=$sinkContextSeq, killSwitch=${runnableGraphConfig.killSwitch.toString()}")
       })
     })
+*/
   }
 
   def reload() : Unit = {
